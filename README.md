@@ -43,6 +43,30 @@ python3 scripts/main.py --input "我想快速做一个预包装烘焙新品策�
 
 公开的脱敏状态示例见 [`examples/脱敏三圈示例.json`](examples/脱敏三圈示例.json)。
 
+## 让 Agent 一键安装
+
+把下面整段提示词复制给支持安装 Skill 的 Agent。Agent 应先检查本机是否已存在同名 Skill；如果存在，不要覆盖，而是报告当前版本并询问是否升级。
+
+```text
+请帮我安装这个公开 GitHub 仓库里的 Skill：
+https://github.com/tushigan/product-strategy-brief-skill
+
+要求：
+1. 使用你当前环境中正式的 Skill 安装工具或安装规范，将仓库根目录安装为 product-strategy-brief；
+2. 安装前先检查目标目录是否已存在同名 Skill；如果已存在，不要覆盖，先告诉我当前状态；
+3. 安装后检查 SKILL.md、scripts/、references/ 和 templates/ 是否完整；
+4. 运行 Skill 结构校验和仓库完整测试；
+5. 使用虚构的预包装烘焙新品项目做一次快速启动测试，确认能够生成项目状态文件；
+6. 不要展示或写入 API Key、Token、Cookie、密码等敏感信息；
+7. 最后用中文告诉我：安装位置、测试结果、如何调用，以及是否需要新开一轮对话才能被 Agent 识别。
+```
+
+在 Codex 中，安装完成后的下一轮对话可以直接说：
+
+```text
+请使用 $product-strategy-brief，帮我从零梳理一个预包装烘焙新品的产品开发策略 Brief。
+```
+
 ## 安装为本地 Skill
 
 将整个仓库复制到 Codex 或其他兼容 Agent 的 Skill 目录，并保持 `SKILL.md`、`scripts/`、`references/` 的相对位置不变。运行前先执行完整测试；团队项目产生的 `project_state.json` 和真实调研材料应放在各自受控的项目目录中。
