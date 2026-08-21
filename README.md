@@ -67,6 +67,14 @@ https://github.com/tushigan/product-strategy-brief-skill
 请使用 $product-strategy-brief，帮我从零梳理一个预包装烘焙新品的产品开发策略 Brief。
 ```
 
+也可以使用更直观的中文触发写法：
+
+```text
+/产品开发策略 帮我从零梳理一个预包装烘焙新品
+```
+
+`/产品开发策略` 是写入 Skill 发现规则的中文调用别名，效果等同于 `$product-strategy-brief`。Skill 的安装目录和正式名称仍保持英文，以兼容不同 Agent 的 Skill 规范。
+
 ## 安装为本地 Skill
 
 将整个仓库复制到 Codex 或其他兼容 Agent 的 Skill 目录，并保持 `SKILL.md`、`scripts/`、`references/` 的相对位置不变。运行前先执行完整测试；团队项目产生的 `project_state.json` 和真实调研材料应放在各自受控的项目目录中。

@@ -1,8 +1,8 @@
 ---
 name: product-strategy-brief
-description: "用于预包装食品团队在新品创意前梳理产品开发策略 Brief，或诊断既有策略是否具备市场机会、客户意愿与供应链承接能力。"
+description: "用于预包装食品团队在新品创意前梳理产品开发策略 Brief，或诊断既有策略是否具备市场机会、客户意愿与供应链承接能力。用户输入 /产品开发策略、产品开发策略 Brief、产品策略工作坊或 product-strategy-brief 时使用。"
 metadata:
-  version: "0.1.0"
+  version: "0.1.1"
   requires:
     bins: ["python3"]
 ---
@@ -17,6 +17,16 @@ metadata:
 
 ```text
 可做 ∩ 想做 ∩ 能做 = 该做的部分
+```
+
+## 中文触发别名
+
+用户以 `/产品开发策略` 开头时，视为明确调用本 Skill，效果等同于 `$product-strategy-brief`。将别名之后的内容作为本轮需求；如果用户只输入别名，则进入工作坊模式并提出第一个 Brief 问题。
+
+例如：
+
+```text
+/产品开发策略 帮我从零梳理一个常温预包装烘焙新品
 ```
 
 ## 渐进式披露
