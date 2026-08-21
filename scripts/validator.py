@@ -55,10 +55,16 @@ def validate_three_circle(data: dict[str, Any]) -> dict[str, Any]:
     problems: list[str] = []
     if market.get("status") != "confirmed":
         problems.append("可做尚未达到 confirmed")
+    if not market.get("evidence_ids"):
+        problems.append("可做缺少证据引用")
     if client.get("status") != "confirmed":
         problems.append("想做尚未达到 confirmed")
+    if not client.get("evidence_ids"):
+        problems.append("想做缺少证据引用")
     if capability.get("status") not in RECOMMENDABLE_CAPABILITY:
         problems.append("能做不是 current 或 stretch")
+    if not capability.get("evidence_ids"):
+        problems.append("能做缺少证据引用")
     status = intersection.get("status", "pending")
     if status == "recommended" and problems:
         problems.append("交集标记为 recommended，但三圈仍有阻断")
@@ -77,4 +83,3 @@ def validate_state(data: dict[str, Any]) -> dict[str, Any]:
     brief_result = validate_brief(data)
     circle_result = validate_three_circle(data)
     return {"valid": brief_result["valid"] and circle_result["valid"], "brief": brief_result, "three_circle": circle_result}
-

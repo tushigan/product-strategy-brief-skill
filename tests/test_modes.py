@@ -47,9 +47,9 @@ class ModesTest(unittest.TestCase):
                 "明确禁用或受限工艺": "未经确认的注酱工艺",
                 "目标保质期类型": "中保",
             }
-            state["three_circle"]["可做"].update({"status": "confirmed", "market_opportunity": "机会"})
-            state["three_circle"]["想做"].update({"status": "confirmed", "client_intent": "意愿"})
-            state["three_circle"]["能做"].update({"status": "current", "current_capability": "能力"})
+            state["three_circle"]["可做"].update({"status": "confirmed", "market_opportunity": "机会", "evidence_ids": ["market-001"]})
+            state["three_circle"]["想做"].update({"status": "confirmed", "client_intent": "意愿", "evidence_ids": ["intent-001"]})
+            state["three_circle"]["能做"].update({"status": "current", "current_capability": "能力", "evidence_ids": ["capability-001"]})
             state["three_circle"]["intersection"]["strategy_fit"] = "交集"
             manager.save(state)
             mode = WorkshopMode(manager, state)
@@ -58,6 +58,29 @@ class ModesTest(unittest.TestCase):
             self.assertEqual(result["status"], "success")
             self.assertEqual(manager.load()["meta"]["status"], "strategy_confirmed")
             self.assertEqual(manager.load()["three_circle"]["intersection"]["status"], "recommended")
+
+    def test_workshop_circle_answer_creates_evidence_reference(self):
+        with tempfile.TemporaryDirectory() as temp:
+            manager = StateManager(temp)
+            state = manager.ensure("证据记录测试")
+            state["brief"] = {
+                "产品问题": "问题",
+                "开发目标": "目标",
+                "主要渠道或销售场景": "便利店",
+                "目标消费者": "上班族",
+                "目标保质期要求": "常温 60 天",
+                "可用产线与关键工艺能力": "现有平板线",
+                "明确禁用或受限工艺": "未经确认的注酱工艺",
+                "目标保质期类型": "中保",
+            }
+            manager.save(state)
+            mode = WorkshopMode(manager, state)
+            mode.handle("")
+            mode.handle("渠道访谈和公开在售页面均显示便携早餐存在空档")
+
+            stored = manager.load()["three_circle"]["可做"]
+            self.assertEqual(stored["status"], "confirmed")
+            self.assertEqual(len(stored["evidence_ids"]), 1)
 
 
 if __name__ == "__main__":

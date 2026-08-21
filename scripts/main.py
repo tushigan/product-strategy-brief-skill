@@ -21,12 +21,14 @@ from scripts.state_manager import StateManager
 def run(user_input: str, project_path: str | None = None, project_json: str | None = None, mode: str | None = None) -> dict[str, Any]:
     if project_json:
         json_path = Path(project_json).expanduser().resolve()
-        project_path = str(json_path.parent)
-    manager = StateManager(project_path or Path.cwd())
+        manager = StateManager(json_path.parent, filename=json_path.name)
+    else:
+        manager = StateManager(project_path or Path.cwd())
+    has_existing_project = manager.json_path.exists()
     state = manager.ensure()
     context = {
         "mode": mode,
-        "has_existing_project": manager.json_path.exists(),
+        "has_existing_project": has_existing_project,
         "project_status": state.get("meta", {}).get("status"),
         "last_mode": state.get("meta", {}).get("current_mode"),
     }

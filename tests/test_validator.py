@@ -32,19 +32,31 @@ class ValidatorTest(unittest.TestCase):
 
     def test_three_circle_requires_intersection(self):
         state = empty_state("三圈测试")
-        state["three_circle"]["可做"]["status"] = "confirmed"
-        state["three_circle"]["想做"]["status"] = "confirmed"
-        state["three_circle"]["能做"]["status"] = "stretch"
+        state["three_circle"]["可做"].update({"status": "confirmed", "evidence_ids": ["market-001"]})
+        state["three_circle"]["想做"].update({"status": "confirmed", "evidence_ids": ["intent-001"]})
+        state["three_circle"]["能做"].update({"status": "stretch", "evidence_ids": ["capability-001"]})
         state["three_circle"]["intersection"]["status"] = "pending"
         result = validate_three_circle(state)
         self.assertFalse(result["can_recommend"])
 
-    def test_three_circle_recommended_when_all_gates_pass(self):
-        state = empty_state("推荐测试")
-        state["brief"] = complete_brief()
+    def test_three_circle_rejects_status_without_evidence(self):
+        state = empty_state("证据门禁测试")
         state["three_circle"]["可做"]["status"] = "confirmed"
         state["three_circle"]["想做"]["status"] = "confirmed"
         state["three_circle"]["能做"]["status"] = "current"
+        state["three_circle"]["intersection"]["status"] = "recommended"
+        result = validate_three_circle(state)
+        self.assertFalse(result["can_recommend"])
+        self.assertIn("可做缺少证据引用", result["blocking_reasons"])
+        self.assertIn("想做缺少证据引用", result["blocking_reasons"])
+        self.assertIn("能做缺少证据引用", result["blocking_reasons"])
+
+    def test_three_circle_recommended_when_all_gates_pass(self):
+        state = empty_state("推荐测试")
+        state["brief"] = complete_brief()
+        state["three_circle"]["可做"].update({"status": "confirmed", "evidence_ids": ["market-001"]})
+        state["three_circle"]["想做"].update({"status": "confirmed", "evidence_ids": ["intent-001"]})
+        state["three_circle"]["能做"].update({"status": "current", "evidence_ids": ["capability-001"]})
         state["three_circle"]["intersection"]["status"] = "recommended"
         result = validate_state(state)
         self.assertTrue(result["valid"])

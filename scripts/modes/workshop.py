@@ -87,11 +87,14 @@ class WorkshopMode:
             _set_path(self.state, tuple(pending["target"].split(".")), answer)
             if pending["target"] == "three_circle.可做.market_opportunity":
                 self.state["three_circle"]["可做"]["status"] = "confirmed"
+                self._add_evidence_reference("可做", "market")
             elif pending["target"] == "three_circle.想做.client_intent":
                 self.state["three_circle"]["想做"]["status"] = "confirmed"
+                self._add_evidence_reference("想做", "intent")
             elif pending["target"] == "three_circle.能做.current_capability":
                 text = answer.lower()
                 self.state["three_circle"]["能做"]["status"] = "stretch" if any(x in text for x in ("踮", "调整", "改造", "新增")) else "current"
+                self._add_evidence_reference("能做", "capability")
             self.state["meta"].pop("pending_question", None)
             self.manager.save(self.state)
             self.manager.add_history("workshop_answer", pending["target"], mode="workshop")
@@ -108,6 +111,13 @@ class WorkshopMode:
         self.state["meta"]["status"] = "in_progress"
         self.manager.save(self.state)
         return self._response("我们按三圈定位逐步梳理。", prompt["question"])
+
+    def _add_evidence_reference(self, circle_name: str, prefix: str) -> None:
+        circle = self.state["three_circle"][circle_name]
+        evidence_ids = circle.setdefault("evidence_ids", [])
+        evidence_id = f"workshop-{prefix}-{len(evidence_ids) + 1:03d}"
+        if evidence_id not in evidence_ids:
+            evidence_ids.append(evidence_id)
 
     def _response(self, message: str, question: str) -> dict[str, Any]:
         return {
