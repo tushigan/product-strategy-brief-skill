@@ -52,6 +52,7 @@ def empty_state(project_name: str = "未命名项目") -> dict[str, Any]:
         },
         "outputs": {"lark_doc_url": "", "generated_at": ""},
         "research_sources": [],
+        "case_index": [],
         "history": []
     }
 
@@ -101,4 +102,3 @@ class StateManager:
         state.setdefault("history", []).append(event)
         self.save(state)
         return event
-
