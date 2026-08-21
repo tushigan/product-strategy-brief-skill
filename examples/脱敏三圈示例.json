@@ -1,0 +1,80 @@
+{
+  "说明": "以下均为虚构品类、虚构企业和虚构数据，只用于演示三圈定位状态。",
+  "cases": [
+    {
+      "case_id": "demo-intersection-001",
+      "场景": "虚构谷物烘焙棒进入通勤早餐场景",
+      "three_circle": {
+        "可做": {
+          "status": "confirmed",
+          "evidence_ids": ["demo-market-001"],
+          "summary": "虚构调研显示目标渠道存在便携早餐空档"
+        },
+        "想做": {
+          "status": "confirmed",
+          "evidence_ids": ["demo-intent-001"],
+          "summary": "虚构企业已确认该方向符合年度重点并接受小批量试销"
+        },
+        "能做": {
+          "status": "stretch",
+          "evidence_ids": ["demo-capability-001"],
+          "summary": "现有虚构产线只需调整模具与包装段即可试产"
+        },
+        "intersection": {
+          "status": "recommended",
+          "decision_reason": "三圈均有脱敏示例证据，且投入属于伸手可及范围"
+        }
+      }
+    },
+    {
+      "case_id": "demo-no-intent-002",
+      "场景": "虚构社交平台上的高热度夹心烘焙趋势",
+      "three_circle": {
+        "可做": {
+          "status": "signal",
+          "evidence_ids": ["demo-trend-002"],
+          "summary": "观察到内容热度，但尚不能外推为销量"
+        },
+        "想做": {
+          "status": "blocked",
+          "evidence_ids": ["demo-intent-002"],
+          "summary": "虚构企业明确不接受新增冷链与高退货风险"
+        },
+        "能做": {
+          "status": "major_investment",
+          "evidence_ids": [],
+          "summary": "需要新增虚构设备并改造车间"
+        },
+        "intersection": {
+          "status": "not_recommended",
+          "decision_reason": "趋势信号不能覆盖客户意愿阻断和重大投入"
+        }
+      }
+    },
+    {
+      "case_id": "demo-capability-gap-003",
+      "场景": "虚构企业希望推出多层酥皮常温产品",
+      "three_circle": {
+        "可做": {
+          "status": "confirmed",
+          "evidence_ids": ["demo-market-003"],
+          "summary": "虚构渠道访谈显示规格存在机会"
+        },
+        "想做": {
+          "status": "confirmed",
+          "evidence_ids": ["demo-intent-003"],
+          "summary": "虚构企业愿意投入研发验证"
+        },
+        "能做": {
+          "status": "major_investment",
+          "evidence_ids": ["demo-capability-003"],
+          "summary": "现有虚构产线无法稳定承接，需要重大设备投入"
+        },
+        "intersection": {
+          "status": "conditional",
+          "decision_reason": "客户想做且市场有机会，但必须先通过外协或小试验证替代路径"
+        }
+      }
+    }
+  ]
+}

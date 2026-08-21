@@ -39,6 +39,14 @@ python3 scripts/main.py --input "我想快速做一个预包装烘焙新品策�
 
 运行后，项目状态会保存在指定工作区；动态调研记录应保存到项目自己的资料目录，不写入公开 Skill 仓库。
 
+调研证据可通过 `scripts/research_log.py` 中的 `ResearchLog` 写入项目状态。记录器会检查来源类型、日期、URL、证据类别、样本边界和禁止外推范围；同一 `source_id` 重复写入不会制造重复记录，也会拒绝 Cookie、Token、密码等敏感字段。
+
+公开的脱敏状态示例见 [`examples/脱敏三圈示例.json`](examples/脱敏三圈示例.json)。
+
+## 安装为本地 Skill
+
+将整个仓库复制到 Codex 或其他兼容 Agent 的 Skill 目录，并保持 `SKILL.md`、`scripts/`、`references/` 的相对位置不变。运行前先执行完整测试；团队项目产生的 `project_state.json` 和真实调研材料应放在各自受控的项目目录中。
+
 ## 与预包装烘焙新品开发 Skill 的关系
 
 本 Skill 负责：
@@ -56,4 +64,3 @@ Brief → 三圈定位 → 产品开发策略 → 开发边界
 ## 许可证
 
 MIT License。详见 [LICENSE](LICENSE)。
-
