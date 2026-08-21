@@ -54,11 +54,13 @@ https://github.com/tushigan/product-strategy-brief-skill
 要求：
 1. 使用你当前环境中正式的 Skill 安装工具或安装规范，将仓库根目录安装为 product-strategy-brief；
 2. 安装前先检查目标目录是否已存在同名 Skill；如果已存在，不要覆盖，先告诉我当前状态；
-3. 安装后检查 SKILL.md、scripts/、references/ 和 templates/ 是否完整；
-4. 运行 Skill 结构校验和仓库完整测试；
-5. 使用虚构的预包装烘焙新品项目做一次快速启动测试，确认能够生成项目状态文件；
-6. 不要展示或写入 API Key、Token、Cookie、密码等敏感信息；
-7. 最后用中文告诉我：安装位置、测试结果、如何调用，以及是否需要新开一轮对话才能被 Agent 识别。
+3. 安装后检查 SKILL.md、agents/、scripts/、references/、templates/ 和 codex-prompts/ 是否完整；
+4. 如果当前宿主是 Codex，把仓库中的 codex-prompts/产品开发策略.md 复制到 ~/.codex/prompts/产品开发策略.md；如果目标文件已存在，不要静默覆盖，先比较内容并说明是相同版本还是需要升级；
+5. 运行 Skill 结构校验和仓库完整测试；
+6. 使用虚构的预包装烘焙新品项目做一次快速启动测试，确认能够生成项目状态文件；
+7. 刷新或重启 Codex 后，真实打开输入框的 / 下拉菜单，确认能看到 prompts:产品开发策略，并确认 Skill 的中文显示名为“产品开发策略”；
+8. 不要展示或写入 API Key、Token、Cookie、密码等敏感信息；
+9. 最后用中文告诉我：Skill 安装位置、提示词安装位置、测试结果、菜单验收结果、如何调用，以及是否需要刷新或重启 Codex。
 ```
 
 在 Codex 中，安装完成后的下一轮对话可以直接说：
@@ -73,7 +75,21 @@ https://github.com/tushigan/product-strategy-brief-skill
 /产品开发策略 帮我从零梳理一个预包装烘焙新品
 ```
 
-`/产品开发策略` 是写入 Skill 发现规则的中文调用别名，效果等同于 `$product-strategy-brief`。Skill 的安装目录和正式名称仍保持英文，以兼容不同 Agent 的 Skill 规范。
+`/产品开发策略` 是写入 Skill 发现规则的中文文本别名，作为普通消息发送时，效果等同于 `$product-strategy-brief`。Skill 的安装目录和正式名称仍保持英文，以兼容不同 Agent 的 Skill 规范。
+
+### Codex 斜杠菜单入口
+
+本仓库同时提供 [`codex-prompts/产品开发策略.md`](codex-prompts/产品开发策略.md)。安装到 `~/.codex/prompts/产品开发策略.md` 并刷新或重启 Codex 后，在输入框键入 `/`，下拉菜单会显示：
+
+```text
+prompts:产品开发策略
+```
+
+选择后会明确调用 `$product-strategy-brief`。`prompts:` 是 Codex 对自定义提示词统一添加的原生前缀，目前不能去掉。因此需要区分：
+
+- 裸 `/产品开发策略`：普通消息中的中文 Skill 别名；
+- `/prompts:产品开发策略`：真实出现在 Codex `/` 下拉菜单中的自定义提示词命令；
+- “产品开发策略”：Skill 在 Codex 技能列表和菜单中的中文显示名。
 
 ## 安装为本地 Skill
 

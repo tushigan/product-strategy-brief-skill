@@ -2,7 +2,7 @@
 name: product-strategy-brief
 description: "用于预包装食品团队在新品创意前梳理产品开发策略 Brief，或诊断既有策略是否具备市场机会、客户意愿与供应链承接能力。用户输入 /产品开发策略、产品开发策略 Brief、产品策略工作坊或 product-strategy-brief 时使用。"
 metadata:
-  version: "0.1.1"
+  version: "0.1.2"
   requires:
     bins: ["python3"]
 ---

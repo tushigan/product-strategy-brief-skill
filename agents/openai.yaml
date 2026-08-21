@@ -1,0 +1,7 @@
+interface:
+  display_name: "产品开发策略"
+  short_description: "用三圈定位完成产品开发策略 Brief"
+  default_prompt: "使用 $product-strategy-brief，从 Brief 开始梳理可做、想做、能做的交集。"
+
+policy:
+  allow_implicit_invocation: true
